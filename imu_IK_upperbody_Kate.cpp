@@ -79,6 +79,11 @@ public:
 		double a;
 		*ifile >> a;
 
+		//accel - these 3 lines are used to handle the example IMU data, may not be needed longterm
+		*ifile >> a;
+		*ifile >> a;
+		*ifile >> a;
+
 		SimTK::Mat33 Rot;
 		*ifile >> Rot[0][0];
 		*ifile >> Rot[1][0];
@@ -207,7 +212,7 @@ public:
 			}
 
 			// Visualiztion - drawing the frames
-			state.updTime() = iframe * 1. / 40.;
+			state.updTime() = iframe * 1. / 100.;
 			ik.track(state.getTime());
 			ik.updateFromInternalState(state);
 
@@ -282,19 +287,17 @@ int main()
 
 
 		std::vector<std::string> bodies = {
-			"hand",
-			"ulna",
+			"ground",
 			"humerus",
-			"scapula",
-			"ground"
+			"radius",
+			"hand"
 		};
 
 		std::vector<std::string> trackingFiles = {
-			"../walkingandturning2/MT_012005D6-000_walking_and_turning-000_00B4226B2.txt",
-			"../walkingandturning2/MT_012005D6-000_walking_and_turning-000_00B4227D2.txt",
-			"../walkingandturning2/MT_012005D6-000_walking_and_turning-000_00B4227C2.txt",
-			"../walkingandturning2/MT_012005D6-000_walking_and_turning-000_00B421ED2.txt",
-			"../walkingandturning2/MT_012005D6-000_walking_and_turning-000_00B421EE2.txt"
+			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B4226B.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B42263.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B4227B.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B42279.txt"
 		};
 
 		OrientationIK ik(
