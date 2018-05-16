@@ -141,7 +141,7 @@ public:
 												 // local reference frame of the pelvis
 		SimTK::Rotation rot_opensim_imu2(SimTK::BodyOrSpaceType::BodyRotationSequence,
 			-SimTK::Pi / 2, SimTK::ZAxis,
-			SimTK::Pi / 2, SimTK::XAxis,
+			-SimTK::Pi / 2, SimTK::XAxis,
 			0, SimTK::XAxis);
 
 		model.getMultibodySystem().realize(state, SimTK::Stage::Report); //tells us the current state of the system (?: details on functionality of realize)
@@ -158,13 +158,13 @@ public:
 		for (int i = 0; i < m_num_sensors; i++) {
 			ifiles.push_back(new std::ifstream(m_datafiles[i])); //indexes different datafiles
 		}
-
-
 		std::vector<SimTK::Rotation> rotations_opensim_imus = { rot_opensim_imu2 }; //Setting Size
 
 																					//std::vector<SimTK::Rotation> rotations_opensim_imus = {rot_opensim_imu2, rot_opensim_imu0, rot_opensim_imu0, rot_opensim_imu1, rot_opensim_imu1, 
 																					// rot_opensim_imu0, rot_opensim_imu0, rot_opensim_imu1, rot_opensim_imu1, rot_opensim_imu0, rot_opensim_imu1};
 
+
+																					
 		ik.adoptAssemblyGoal(imus); //solve to match these markers
 
 									// Get the first observation and set things up
@@ -212,7 +212,7 @@ public:
 			}
 
 			// Visualiztion - drawing the frames
-			state.updTime() = iframe * 1. / 100.;
+			state.updTime() = iframe * 1. / 100.;// Xsens is 100 or 40 Hz
 			ik.track(state.getTime());
 			ik.updateFromInternalState(state);
 
@@ -294,10 +294,10 @@ int main()
 		};
 
 		std::vector<std::string> trackingFiles = {
-			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B4226B.txt",
-			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B42263.txt",
-			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B4227B.txt",
-			"../IMU_Data_05_10_2018/MT_012005D6-001-000_00B42279.txt"
+			"../IMU_Data_05_10_2018/MT_012005D6-003-000_00B4226B.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-003-000_00B42263.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-003-000_00B4227B.txt",
+			"../IMU_Data_05_10_2018/MT_012005D6-003-000_00B42279.txt"
 		};
 
 		OrientationIK ik(
